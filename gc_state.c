@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <internal_collecter.h>
+#include "internal_collecter.h"
 
 t_collecter	**get_gc_head(void)
 {

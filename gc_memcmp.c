@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <internal_collecter.h>
+#include "internal_collecter.h"
 
 int	gc_memcmp(const void *s1, const void *s2, size_t n)
 {

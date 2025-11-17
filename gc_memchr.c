@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <internal_collecter.h>
+#include "internal_collecter.h"
 
 void	*gc_memchr(const void *s1, int c, size_t n)
 {

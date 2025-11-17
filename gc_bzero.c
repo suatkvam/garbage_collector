@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <internal_collecter.h>
+#include "internal_collecter.h"
 
 void	gc_bzero(void *s, size_t n)
 {

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <internal_collecter.h>
+#include "internal_collecter.h"
 
 void	*gc_memcpy(void *dest, const void *src, size_t n)
 {

@@ -12,7 +12,7 @@
 
 #include "internal_collecter.h"
 
-static void	mark_pointer(void *ptr)
+void	mark_pointer(void *ptr)
 {
 	t_collecter	**head_ptr;
 	t_collecter	*node;
