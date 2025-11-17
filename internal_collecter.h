@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   internal_collecter.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akivam <akivam@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*   By: harici <harici@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 16:57:17 by akivam            #+#    #+#             */
-/*   Updated: 2025/11/17 16:57:18 by akivam           ###   ########.fr       */
+/*   Updated: 2025/11/17 21:02:46 by harici           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,12 @@ void		gc_collect(void);
 void		gc_mark(void);
 void		gc_sweep(void);
 t_collecter	*get_header_from_ptr(void *ptr);
+
+// gc_mark helper functions
+int			is_valid_pointer(void *ptr);
+void		mark_memory_region(void *start, size_t size);
+void		mark_pointer(void *ptr);
+void		mark_from_stack(void);
 
 // memory manipulation functions
 void		gc_bzero(void *s, size_t n);

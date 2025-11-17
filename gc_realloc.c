@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akivam <akivam@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*   By: harici <harici@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 16:57:17 by akivam            #+#    #+#             */
-/*   Updated: 2025/11/17 16:57:17 by akivam           ###   ########.fr       */
+/*   Updated: 2025/11/17 20:49:10 by harici           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	*gc_realloc(void *ptr, size_t size)
 {
-	void *new_ptr;
-	t_collecter *old_header;
-	size_t copy_size;
+	void		*new_ptr;
+	t_collecter	*old_header;
+	size_t		copy_size;
 
 	if (!ptr)
 		return (gc_malloc(size));
