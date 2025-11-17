@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "internal_collecter.h"
+#include "internal_collector.h"
 
 static void	scan_stack_range(void *start, void *end)
 {

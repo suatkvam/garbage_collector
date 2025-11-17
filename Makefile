@@ -11,19 +11,14 @@ YELLOW := \033[1;33m
 BLUE := \033[1;34m
 RESET := \033[0m
 
-SRC = collecter_close.c \
-      collecter_init.c \
-      gc_bzero.c \
+SRC = collector_close.c \
+      collector_init.c \
       gc_calloc.c \
       gc_collect.c \
       gc_malloc.c \
       gc_mark.c \
       gc_mark_utils.c \
-      gc_memchr.c \
-      gc_memcmp.c \
-      gc_memcpy.c \
-      gc_memmove.c \
-      gc_memset.c \
+      gc_memory_utils.c \
       gc_realloc.c \
       gc_state.c \
       gc_sweep.c \

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "internal_collecter.h"
+#include "internal_collector.h"
 
 void	*gc_realloc(void *ptr, size_t size)
 {

@@ -10,7 +10,21 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "internal_collecter.h"
+#include "internal_collector.h"
+
+static void	gc_bzero(void *s, size_t n)
+{
+	size_t			i;
+	unsigned char	*tmp;
+
+	i = 0;
+	tmp = s;
+	while (i < n)
+	{
+		tmp[i] = (unsigned char)0;
+		i = i + 1;
+	}
+}
 
 void	*gc_calloc(size_t nmemb, size_t size)
 {

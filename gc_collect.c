@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "internal_collecter.h"
+#include "internal_collector.h"
 
 void	gc_collect(void)
 {
