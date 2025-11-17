@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   gc_memory_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akivam <akivam@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*   By: harici <harici@student.42istanbul.com.t    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 21:51:42 by akivam            #+#    #+#             */
-/*   Updated: 2025/11/17 21:51:46 by akivam           ###   ########.fr       */
+/*   Updated: 2025/11/17 22:06:32 by harici           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-
 
 #include "internal_collector.h"
 
