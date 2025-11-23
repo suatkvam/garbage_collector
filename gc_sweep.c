@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "internal_collector.h"
+#include "internal_malloc.h"
 
 static void	sweep_unmarked(t_collecter **head_ptr, t_collecter **prev,
 		t_collecter *current, t_collecter *next)
@@ -19,7 +20,7 @@ static void	sweep_unmarked(t_collecter **head_ptr, t_collecter **prev,
 		(*prev)->next = next;
 	else
 		*head_ptr = next;
-	free(current);
+	GC_INTERNAL_FREE(current);
 }
 
 void	gc_sweep(void)
