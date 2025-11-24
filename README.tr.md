@@ -456,7 +456,9 @@ MIT Lisansı - Projelerinizde kullanmaktan çekinmeyin!
 
 ## Yazarlar
 
-- **suatkvam** - İlk çalışma
+- **suatkvam** -
+- **hudayiarici** - 
+
 
 ## Teşekkür
 
