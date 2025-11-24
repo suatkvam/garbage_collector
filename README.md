@@ -454,7 +454,8 @@ MIT License - Feel free to use in your projects!
 
 ## Authors
 
-- **suatkvam** - Initial work
+- **suatkvam** -
+- **hudayiarici** -
 
 ## Acknowledgments
 
