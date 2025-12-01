@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   gc_wrap.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akivam <akivam@student.istanbul.com.tr>    +#+  +:+       +#+        */
+/*   By: akivam <akivam@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/23 22:29:43 by akivam              #+#    #+#             */
-/*   Updated: 2025/11/28 20:25:14 by akivam           ###   ########.tr       */
+/*   Created: 2025/12/01 12:44:01 by akivam            #+#    #+#             */
+/*   Updated: 2025/12/01 12:44:04 by akivam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 
 #ifndef GC_WRAP_H
 # define GC_WRAP_H

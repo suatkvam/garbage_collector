@@ -24,7 +24,7 @@ static void	scan_stack_range(void *start, void *end)
 		current++;
 	}
 }
-
+//!/* Her iki yönü de desteklenebilir belki*/
 void	mark_from_stack(void)
 {
 	void	**stack_start_ptr;

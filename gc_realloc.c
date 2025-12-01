@@ -33,5 +33,4 @@ void	*gc_realloc(void *ptr, size_t size)
 	else
 		copy_size = size;
 	gc_memcpy(new_ptr, ptr, copy_size);
-	return (new_ptr);
 }

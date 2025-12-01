@@ -4,13 +4,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 GC_FLAGS = -DUSE_GC_WRAP
 
-# Linker wrap flags (Linux/MinGW)
-#! bu kaldırılabilir belki
-ifeq ($(OS),Windows_NT)
-	WRAP_FLAGS = -Wl,--wrap=malloc,--wrap=calloc,--wrap=realloc,--wrap=free
-else
-	WRAP_FLAGS = -Wl,--wrap=malloc,--wrap=calloc,--wrap=realloc,--wrap=free
-endif
+WRAP_FLAGS = -Wl,--wrap=malloc,--wrap=calloc,--wrap=realloc,--wrap=free
 
 AR = ar
 RM = rm -f
@@ -42,14 +36,21 @@ OBJS = $(addprefix $(OBJ_DIR)/,$(SRCS:.c=.o))
 
 all: $(NAME)
 
+normal: all
+
+gc: CFLAGS += $(GC_FLAGS)
+gc: all
+	@printf '$(GREEN)Built with GC wrapping enabled!$(RESET)\n'
+
 $(OBJ_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	@printf '$(GREEN)Compiling %s...$(RESET)\n' "$<"
-	@$(CC) $(CFLAGS) $(GC_FLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)
 	@printf '$(YELLOW)Creating static library %s$(RESET)\n' "$(NAME)"
 	$(AR) -rcs $(NAME) $(OBJS)
+	@printf '$(GREEN)Build complete!$(RESET)\n'
 
 clean:
 	@$(RM) $(OBJS)
@@ -62,4 +63,37 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+# ✅ ADDED: Help target
+help:
+	@printf '$(BLUE)╔════════════════════════════════════════╗$(RESET)\n'
+	@printf '$(BLUE)║  Garbage Collector - Build Targets    ║$(RESET)\n'
+	@printf '$(BLUE)╚════════════════════════════════════════╝$(RESET)\n'
+	@printf '\n'
+	@printf '$(YELLOW)Available targets:$(RESET)\n'
+	@printf '  $(GREEN)make$(RESET) or $(GREEN)make normal$(RESET)\n'
+	@printf '    Build with standard malloc/free\n'
+	@printf '\n'
+	@printf '  $(GREEN)make gc$(RESET)\n'
+	@printf '    Build with garbage collector (-DUSE_GC_WRAP)\n'
+	@printf '    Enables automatic memory management\n'
+	@printf '\n'
+	@printf '  $(GREEN)make clean$(RESET)\n'
+	@printf '    Remove object files\n'
+	@printf '\n'
+	@printf '  $(GREEN)make fclean$(RESET)\n'
+	@printf '    Remove all generated files\n'
+	@printf '\n'
+	@printf '  $(GREEN)make re$(RESET)\n'
+	@printf '    Rebuild from scratch\n'
+	@printf '\n'
+	@printf '$(YELLOW)Linking your program:$(RESET)\n'
+	@printf '  $(GREEN)Normal mode:$(RESET)\n'
+	@printf '    gcc your_code.c -L. -lgarbage_collecter -o program\n'
+	@printf '\n'
+	@printf '  $(GREEN)GC mode:$(RESET)\n'
+	@printf '    gcc -DUSE_GC_WRAP your_code.c -L. -lgarbage_collecter \\\n'
+	@printf '        -Wl,--wrap=malloc,--wrap=calloc,--wrap=realloc,--wrap=free \\\n'
+	@printf '        -o program\n'
+	@printf '\n'
+
+.PHONY: all normal gc clean fclean re help

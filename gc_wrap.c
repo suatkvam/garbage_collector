@@ -50,13 +50,19 @@ static void	set_initialized(int value)
 	get_initialized_state(1, value);
 }
 
+/**
+ * auto_init_gc - Automatically initialize GC on first malloc
+ * 
+ * CRITICAL FIX: stack_anchor must be static to persist after function returns
+ * Otherwise, stack_start pointer would be invalid!
+ */
 static void	auto_init_gc(void)
 {
-	int	stack_var;
+	static int	stack_anchor;
 
 	if (!is_initialized())
 	{
-		collector_init(&stack_var);
+		collector_init(&stack_anchor);
 		set_initialized(1);
 	}
 }
@@ -130,4 +136,3 @@ void	gc_cleanup_manual(void)
 		collector_close();
 		set_initialized(0);
 	}
-}
