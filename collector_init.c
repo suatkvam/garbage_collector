@@ -16,6 +16,10 @@ void	collector_init(void *stack_start)
 {
 	void	**stack_ptr;
 
+	if (!stack_start)
+		return ;
 	stack_ptr = get_gc_stack_start();
+	if (!stack_ptr)
+		return ;
 	*stack_ptr = stack_start;
 }

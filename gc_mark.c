@@ -32,7 +32,7 @@ void	mark_pointer(void *ptr)
 		node = node->next;
 	}
 }
-
+//!/* turend byte-byte scan using i++ slower but safer*/
 void	mark_memory_region(void *start, size_t size)
 {
 	size_t	i;
@@ -44,7 +44,7 @@ void	mark_memory_region(void *start, size_t size)
 		potential_ptr = (void **)((char *)start + i);
 		if (is_valid_pointer(*potential_ptr))
 			mark_pointer(*potential_ptr);
-		i += sizeof(void *);
+		i++;
 	}
 }
 
@@ -61,7 +61,7 @@ int	is_valid_pointer(void *ptr)
 	while (node)
 	{
 		data_ptr = (void *)(node + 1);
-		if (ptr >= data_ptr && ptr < (void *)((char *)data_ptr + node->size))
+		if (ptr == data_ptr)
 			return (1);
 		node = node->next;
 	}
