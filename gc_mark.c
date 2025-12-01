@@ -32,6 +32,7 @@ void	mark_pointer(void *ptr)
 		node = node->next;
 	}
 }
+
 //!/* turend byte-byte scan using i++ slower but safer*/
 void	mark_memory_region(void *start, size_t size)
 {

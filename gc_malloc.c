@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "internal_collector.h"
-#include "internal_malloc.h"
 
 void	*gc_malloc(size_t size)
 {
@@ -20,7 +19,7 @@ void	*gc_malloc(size_t size)
 
 	if (size == 0)
 		return (NULL);
-	new_header = GC_INTERNAL_MALLOC(sizeof(t_collecter) + size);
+	new_header = malloc(sizeof(t_collecter) + size);
 	if (!new_header)
 		return (NULL);
 	head_ptr = get_gc_head();
