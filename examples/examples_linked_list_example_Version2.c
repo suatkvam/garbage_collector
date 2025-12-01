@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   examples_linked_list_example_Version2.c            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akivam <akivam@student.istanbul.com.tr>    +#+  +:+       +#+        */
+/*   By: akivam <akivam@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/23 22:29:43 by akivam              #+#    #+#             */
-/*   Updated: 2025/11/23 22:29:43 by akivam             ###   ########.tr       */
+/*   Created: 2025/12/01 13:15:03 by akivam            #+#    #+#             */
+/*   Updated: 2025/12/01 13:15:03 by akivam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 /**
  * LINKED LIST EXAMPLE
- * 
+ *
  * Demonstrates how GC handles data structures automatically.
  * Shows the power of automatic memory management with linked lists.
  */
@@ -29,7 +29,7 @@ typedef struct s_node
 	int				value;
 	char			*data;
 	struct s_node	*next;
-}	t_node;
+}					t_node;
 
 /* ************************************************************************** */
 /*                      LINKED LIST FUNCTIONS                                 */
@@ -44,7 +44,6 @@ t_node	*create_node(int value, const char *data)
 	if (!node)
 		return (NULL);
 	node->value = value;
-	
 	// Allocate and copy data string
 	i = 0;
 	while (data[i])
@@ -59,7 +58,6 @@ t_node	*create_node(int value, const char *data)
 		i++;
 	}
 	node->data[i] = '\0';
-	
 	node->next = NULL;
 	return (node);
 }
@@ -71,14 +69,12 @@ void	list_append(t_node **head, int value, const char *data)
 
 	new_node = create_node(value, data);
 	if (!new_node)
-		return;
-	
+		return ;
 	if (!*head)
 	{
 		*head = new_node;
-		return;
+		return ;
 	}
-	
 	current = *head;
 	while (current->next)
 		current = current->next;
@@ -132,21 +128,20 @@ void	free_list(t_node *head)
 /*                              MAIN PROGRAM                                  */
 /* ************************************************************************** */
 
-int main(void)
+int	main(void)
 {
 	t_node	*list;
 	t_node	*temp_list;
+	t_node	*cycle_list;
 
 	printf("╔════════════════════════════════════════════════════════╗\n");
 	printf("║     Linked List with GC Example                       ║\n");
 	printf("╚════════════════════════════════════════════════════════╝\n\n");
-
 #ifdef USE_GC_WRAP
 	printf("Mode: GARBAGE COLLECTOR\n\n");
 #else
 	printf("Mode: STANDARD MALLOC/FREE\n\n");
 #endif
-
 	// ========== Example 1: Build List ==========
 	printf("1. Building Linked List:\n");
 	list = NULL;
@@ -155,31 +150,25 @@ int main(void)
 	list_append(&list, 3, "Third");
 	list_append(&list, 4, "Fourth");
 	list_append(&list, 5, "Fifth");
-	
 	printf("   Created list with %d nodes:\n", list_length(list));
 	print_list(list);
 	printf("\n");
-
 	// ========== Example 2: Extend List ==========
 	printf("2. Extending List:\n");
 	list_append(&list, 6, "Sixth");
 	list_append(&list, 7, "Seventh");
 	list_append(&list, 8, "Eighth");
-	
 	printf("   Extended list to %d nodes:\n", list_length(list));
 	print_list(list);
 	printf("\n");
-
 	// ========== Example 3: Temporary List ==========
 	printf("3. Creating Temporary List:\n");
 	temp_list = NULL;
 	list_append(&temp_list, 100, "Temp1");
 	list_append(&temp_list, 200, "Temp2");
 	list_append(&temp_list, 300, "Temp3");
-	
 	printf("   Temporary list:\n");
 	print_list(temp_list);
-	
 #ifdef USE_GC_WRAP
 	printf("\n   Setting temp_list = NULL (becomes unreachable)\n");
 	temp_list = NULL;
@@ -190,28 +179,23 @@ int main(void)
 	printf("   Temporary list freed\n");
 #endif
 	printf("\n");
-
 	// ========== Example 4: Truncate List ==========
 	printf("4. Truncating Main List:\n");
 	printf("   Original list (%d nodes):\n", list_length(list));
 	print_list(list);
-	
 	printf("\n   Keeping only first 3 nodes...\n");
 	if (list && list->next && list->next->next)
 		list->next->next->next = NULL;
-	
 	printf("   Truncated list (%d nodes):\n", list_length(list));
 	print_list(list);
-
 #ifdef USE_GC_WRAP
 	printf("\n   Nodes 4-8 are now unreachable\n");
 	printf("   GC will collect them automatically!\n");
 #endif
 	printf("\n");
-
 	// ========== Example 5: Cycle Test ==========
 	printf("5. Handling Cycles:\n");
-	t_node *cycle_list = create_node(1, "Node1");
+	cycle_list = create_node(1, "Node1");
 	if (cycle_list)
 	{
 		cycle_list->next = create_node(2, "Node2");
@@ -223,7 +207,6 @@ int main(void)
 				// Create cycle: 3 -> 1
 				cycle_list->next->next->next = cycle_list;
 				printf("   Created cycle: 1 -> 2 -> 3 -> 1\n");
-				
 #ifdef USE_GC_WRAP
 				printf("   Mark-and-sweep handles cycles correctly!\n");
 				// Break cycle before losing reference
@@ -240,12 +223,10 @@ int main(void)
 		}
 	}
 	printf("\n");
-
 	// ========== Final Cleanup ==========
 	printf("6. Final State:\n");
 	printf("   Main list (%d nodes):\n", list_length(list));
 	print_list(list);
-
 #ifdef USE_GC_WRAP
 	printf("\n   In GC mode:\n");
 	printf("   ✓ All nodes are tracked\n");
@@ -260,10 +241,8 @@ int main(void)
 	free_list(list);
 	printf("   ✓ All memory freed\n");
 #endif
-
 	printf("\n╔════════════════════════════════════════════════════════╗\n");
 	printf("║  Example Completed!                                    ║\n");
 	printf("╚════════════════════════════════════════════════════════╝\n");
-
 	return (0);
 }

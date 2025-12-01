@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   examples_manual_control_example_Version2.c         :+:      :+:    :+:   */
+/*   examples_manual_control_example_Version2.          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akivam <akivam@student.istanbul.com.tr>    +#+  +:+       +#+        */
+/*   By: akivam <akivam@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/23 22:29:44 by akivam              #+#    #+#             */
-/*   Updated: 2025/11/23 22:29:44 by akivam             ###   ########.tr       */
+/*   Created: 2025/12/01 13:15:03 by akivam            #+#    #+#             */
+/*   Updated: 2025/12/01 13:15:03 by akivam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #ifdef USE_GC_WRAP
 # include "../gc_wrap.h"
@@ -19,13 +19,13 @@
 
 /**
  * MANUAL CONTROL EXAMPLE
- * 
+ *
  * This example shows optional manual control of GC.
  * You can:
  *   - Manually initialize GC (optional, auto-init works)
  *   - Manually trigger collections (optional)
  *   - Manually cleanup (optional, happens at exit)
- * 
+ *
  * Note: Manual control is completely optional!
  */
 
@@ -60,7 +60,7 @@ void	print_separator(void)
 /*                              MAIN PROGRAM                                  */
 /* ************************************************************************** */
 
-int main(void)
+int	main(void)
 {
 	int		stack_var;
 	char	*persistent;
@@ -69,10 +69,8 @@ int main(void)
 	printf("╔════════════════════════════════════════════════════════╗\n");
 	printf("║     Manual Control Example (Optional)                 ║\n");
 	printf("╚════════════════════════════════════════════════════════╝\n\n");
-
 #ifdef USE_GC_WRAP
 	printf("Mode: GARBAGE COLLECTOR\n\n");
-	
 	// ========== Optional: Manual Initialization ==========
 	printf("1. Manual Initialization (optional):\n");
 	printf("   Calling GC_INIT()...\n");
@@ -86,7 +84,6 @@ int main(void)
 	printf("Manual control features not available in normal mode.\n");
 	printf("Running standard operations...\n\n");
 #endif
-
 	// ========== Example 1: Persistent Allocation ==========
 	printf("2. Creating Persistent Allocation:\n");
 	persistent = malloc(100);
@@ -99,7 +96,6 @@ int main(void)
 	}
 	print_separator();
 	printf("\n");
-
 	// ========== Example 2: Batch Allocations ==========
 	printf("3. Batch Allocations (Phase 1):\n");
 	printf("   Allocating 50 blocks of 1KB each...\n");
@@ -107,7 +103,6 @@ int main(void)
 	printf("   ✓ Phase 1 complete\n");
 	print_separator();
 	printf("\n");
-
 #ifdef USE_GC_WRAP
 	// ========== Example 3: Manual Collection ==========
 	printf("4. Manual Collection (optional):\n");
@@ -118,7 +113,6 @@ int main(void)
 	print_separator();
 	printf("\n");
 #endif
-
 	// ========== Example 4: More Allocations ==========
 	printf("5. Batch Allocations (Phase 2):\n");
 	printf("   Allocating 100 blocks of 512B each...\n");
@@ -126,7 +120,6 @@ int main(void)
 	printf("   ✓ Phase 2 complete\n");
 	print_separator();
 	printf("\n");
-
 	// ========== Example 5: Periodic Collection Pattern ==========
 	printf("6. Periodic Collection Pattern:\n");
 	printf("   Processing data in batches with periodic collection...\n");
@@ -136,7 +129,6 @@ int main(void)
 		printf("   Batch %d: ", i + 1);
 		allocate_batch(20, 256);
 		printf("allocated 20 blocks");
-		
 #ifdef USE_GC_WRAP
 		if (i % 3 == 0)
 		{
@@ -150,16 +142,13 @@ int main(void)
 	printf("   ✓ All batches processed\n");
 	print_separator();
 	printf("\n");
-
 	// ========== Example 6: Final State ==========
 	printf("7. Final State:\n");
 	printf("   Persistent data: %s...\n", persistent);
-
 #ifdef USE_GC_WRAP
 	printf("   All other allocations can be collected\n");
 	print_separator();
 	printf("\n");
-
 	// ========== Optional: Manual Cleanup ==========
 	printf("8. Manual Cleanup (optional):\n");
 	printf("   Calling GC_CLEANUP()...\n");
@@ -171,10 +160,8 @@ int main(void)
 	free(persistent);
 	printf("   Freed persistent data manually\n");
 #endif
-
 	printf("\n╔════════════════════════════════════════════════════════╗\n");
 	printf("║  Example Completed!                                    ║\n");
 	printf("╚════════════════════════════════════════════════════════╝\n");
-
 	return (0);
 }

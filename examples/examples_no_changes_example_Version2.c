@@ -3,26 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   examples_no_changes_example_Version2.c             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akivam <akivam@student.istanbul.com.tr>    +#+  +:+       +#+        */
+/*   By: akivam <akivam@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/23 22:29:44 by akivam              #+#    #+#             */
-/*   Updated: 2025/11/23 22:29:44 by akivam             ###   ########.tr       */
+/*   Created: 2025/12/01 13:15:03 by akivam            #+#    #+#             */
+/*   Updated: 2025/12/01 13:15:03 by akivam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 /**
  * NO CODE CHANGES EXAMPLE
- * 
+ *
  * This is your existing code - works exactly as-is!
- * 
+ *
  * Compile with:
  *   make normal  - Uses standard malloc/free (you manage memory)
  *   make gc      - Uses garbage collector (automatic management)
- * 
+ *
  * The --wrap linker flag intercepts malloc/free automatically!
  * NO source code modifications needed!
  */
@@ -50,7 +50,7 @@ char	*ft_strdup(const char *s)
 	if (!s)
 		return (NULL);
 	len = ft_strlen(s);
-	dup = malloc(len + 1);  // ← Automatically intercepted!
+	dup = malloc(len + 1); // ← Automatically intercepted!
 	if (!dup)
 		return (NULL);
 	i = 0;
@@ -74,7 +74,7 @@ char	*ft_strjoin(const char *s1, const char *s2)
 		return (NULL);
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
-	joined = malloc(len1 + len2 + 1);  // ← Intercepted!
+	joined = malloc(len1 + len2 + 1); // ← Intercepted!
 	if (!joined)
 		return (NULL);
 	i = 0;
@@ -101,13 +101,13 @@ typedef struct s_node
 {
 	int				value;
 	struct s_node	*next;
-}	t_node;
+}					t_node;
 
 t_node	*create_node(int value)
 {
 	t_node	*node;
 
-	node = malloc(sizeof(t_node));  // ← Intercepted!
+	node = malloc(sizeof(t_node)); // ← Intercepted!
 	if (!node)
 		return (NULL);
 	node->value = value;
@@ -138,7 +138,7 @@ void	free_list(t_node *head)
 	while (head)
 	{
 		tmp = head->next;
-		free(head);  // ← In GC mode: no-op; In normal mode: frees
+		free(head); // ← In GC mode: no-op; In normal mode: frees
 		head = tmp;
 	}
 }
@@ -147,7 +147,7 @@ void	free_list(t_node *head)
 /*                              MAIN PROGRAM                                  */
 /* ************************************************************************** */
 
-int main(void)
+int	main(void)
 {
 	char	*str1;
 	char	*str2;
@@ -155,30 +155,26 @@ int main(void)
 	t_node	*list;
 	int		*array;
 	int		i;
+	void	*temp;
 
 	printf("╔════════════════════════════════════════════════════════╗\n");
 	printf("║     No Code Changes Required - Example                ║\n");
 	printf("╚════════════════════════════════════════════════════════╝\n\n");
-
 #ifdef USE_GC_WRAP
 	printf("Mode: GARBAGE COLLECTOR (automatic memory management)\n\n");
 #else
 	printf("Mode: STANDARD MALLOC/FREE (manual memory management)\n\n");
 #endif
-
 	// ========== Example 1: String Operations ==========
 	printf("1. String Operations:\n");
 	printf("   Creating strings with ft_strdup...\n");
 	str1 = ft_strdup("Hello");
 	str2 = ft_strdup("World");
-	
 	printf("   str1: \"%s\"\n", str1);
 	printf("   str2: \"%s\"\n", str2);
-	
 	printf("   Joining strings...\n");
 	joined = ft_strjoin(str1, str2);
 	printf("   joined: \"%s\"\n\n", joined);
-
 	// ========== Example 2: Linked List ==========
 	printf("2. Linked List:\n");
 	printf("   Creating list: 1 -> 2 -> 3 -> 4 -> 5\n");
@@ -187,15 +183,13 @@ int main(void)
 	list->next->next = create_node(3);
 	list->next->next->next = create_node(4);
 	list->next->next->next->next = create_node(5);
-	
 	printf("   ");
 	print_list(list);
 	printf("\n");
-
 	// ========== Example 3: Array Allocation ==========
 	printf("3. Array Allocation:\n");
 	printf("   Allocating array of 10 integers...\n");
-	array = malloc(sizeof(int) * 10);  // ← Intercepted!
+	array = malloc(sizeof(int) * 10); // ← Intercepted!
 	if (array)
 	{
 		i = 0;
@@ -215,55 +209,46 @@ int main(void)
 		}
 		printf("]\n\n");
 	}
-
 	// ========== Example 4: Multiple Temporary Allocations ==========
 	printf("4. Temporary Allocations:\n");
 	printf("   Creating 100 temporary allocations...\n");
 	i = 0;
 	while (i < 100)
 	{
-		void *temp = malloc(64);
+		temp = malloc(64);
 		// These are temporary, will be collected in GC mode
 		(void)temp;
 		i++;
 	}
 	printf("   Done!\n\n");
-
 	// ========== Memory Management ==========
 	printf("5. Memory Management:\n");
-
 #ifdef USE_GC_WRAP
 	printf("   ✓ GC Mode: All allocations tracked\n");
 	printf("   ✓ No manual free() needed\n");
 	printf("   ✓ Memory will be cleaned up automatically\n");
 	printf("   ✓ Calling free() is safe but unnecessary (no-op)\n\n");
-	
 	// In GC mode, these free calls are no-ops
 	free(str1);
 	free(str2);
 	free(joined);
 	free_list(list);
 	free(array);
-	
 	printf("   Called free() on all allocations (no-ops in GC mode)\n");
 #else
 	printf("   ✓ Normal Mode: Manual memory management\n");
 	printf("   ✓ Must call free() for each allocation\n");
 	printf("   ✓ Freeing all allocations...\n\n");
-	
 	// In normal mode, must free manually
 	free(str1);
 	free(str2);
 	free(joined);
 	free_list(list);
 	free(array);
-	
 	printf("   All memory freed manually\n");
 #endif
-
 	printf("\n╔════════════════════════════════════════════════════════╗\n");
 	printf("║  Example Completed Successfully!                       ║\n");
 	printf("╚════════════════════════════════════════════════════════╝\n");
-
 	return (0);
 }

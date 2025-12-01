@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gc_string_integration.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akivam <akivam@student.istanbul.com.tr>    +#+  +:+       +#+        */
+/*   By: akivam <akivam@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/23 22:29:44 by akivam              #+#    #+#             */
-/*   Updated: 2025/11/23 22:29:44 by akivam             ###   ########.tr       */
+/*   Created: 2025/12/01 13:15:03 by akivam            #+#    #+#             */
+/*   Updated: 2025/12/01 13:15:03 by akivam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*gc_strdup(const char *s)
 	if (!s)
 		return (NULL);
 	len = ft_strlen(s);
-	dup = gc_malloc(len + 1);  // Use GC instead of malloc!
+	dup = gc_malloc(len + 1); // Use GC instead of malloc!
 	if (!dup)
 		return (NULL);
 	i = 0;
@@ -68,7 +68,7 @@ char	*gc_strjoin(const char *s1, const char *s2)
 		return (NULL);
 	len1 = ft_strlen(s1);
 	len2 = ft_strlen(s2);
-	joined = gc_malloc(len1 + len2 + 1);  // GC allocation!
+	joined = gc_malloc(len1 + len2 + 1); // GC allocation!
 	if (!joined)
 		return (NULL);
 	i = 0;
@@ -103,7 +103,7 @@ char	*gc_substr(const char *s, unsigned int start, size_t len)
 		return (gc_strdup(""));
 	if (start + len > s_len)
 		len = s_len - start;
-	sub = gc_malloc(len + 1);  // GC allocation!
+	sub = gc_malloc(len + 1); // GC allocation!
 	if (!sub)
 		return (NULL);
 	i = 0;
@@ -151,7 +151,7 @@ char	**gc_split(const char *s, char c)
 	if (!s)
 		return (NULL);
 	words = count_words(s, c);
-	result = gc_malloc(sizeof(char *) * (words + 1));  // GC allocation!
+	result = gc_malloc(sizeof(char *) * (words + 1)); // GC allocation!
 	if (!result)
 		return (NULL);
 	i = 0;
@@ -163,7 +163,7 @@ char	**gc_split(const char *s, char c)
 		end = start;
 		while (s[end] && s[end] != c)
 			end++;
-		result[i] = gc_substr(s, start, end - start);  // Uses GC!
+		result[i] = gc_substr(s, start, end - start); // Uses GC!
 		start = end;
 		i++;
 	}
@@ -175,7 +175,7 @@ char	**gc_split(const char *s, char c)
 /*                              MAIN EXAMPLE                                  */
 /* ************************************************************************** */
 
-int main(void)
+int	main(void)
 {
 	int		stack_var;
 	char	*str1;
@@ -186,16 +186,13 @@ int main(void)
 	int		i;
 
 	printf("=== GC String Integration Example ===\n\n");
-
 	// Initialize GC
 	collector_init(&stack_var);
-
 	// Example 1: gc_strdup
 	printf("1. Using gc_strdup:\n");
 	str1 = gc_strdup("Hello, World!");
 	printf("   Original: \"Hello, World!\"\n");
 	printf("   Duplicated: \"%s\"\n\n", str1);
-
 	// Example 2: gc_strjoin
 	printf("2. Using gc_strjoin:\n");
 	str2 = gc_strdup("Garbage Collector");
@@ -204,13 +201,11 @@ int main(void)
 	printf("   str1: \"%s\"\n", str1);
 	printf("   str2: \"%s\"\n", str2);
 	printf("   Joined: \"%s\"\n\n", joined);
-
 	// Example 3: gc_substr
 	printf("3. Using gc_substr:\n");
 	sub = gc_substr("Extract this part", 8, 4);
 	printf("   Original: \"Extract this part\"\n");
 	printf("   Substring (8, 4): \"%s\"\n\n", sub);
-
 	// Example 4: gc_split
 	printf("4. Using gc_split:\n");
 	words = gc_split("one,two,three,four,five", ',');
@@ -223,7 +218,6 @@ int main(void)
 		i++;
 	}
 	printf("\n");
-
 	// Example 5: No need to free!
 	printf("5. Memory Management:\n");
 	printf("   ✓ No manual free() calls needed\n");
@@ -231,7 +225,6 @@ int main(void)
 	printf("   ✓ Running gc_collect()...\n");
 	gc_collect();
 	printf("   ✓ Unused strings automatically freed\n\n");
-
 	// Cleanup
 	collector_close();
 	printf("=== Example completed ===\n");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft_gc_wrapper.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akivam <akivam@student.istanbul.com.tr>    +#+  +:+       +#+        */
+/*   By: akivam <akivam@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/23 22:29:44 by akivam              #+#    #+#             */
-/*   Updated: 2025/11/23 22:29:44 by akivam             ###   ########.tr       */
+/*   Created: 2025/12/01 13:15:03 by akivam            #+#    #+#             */
+/*   Updated: 2025/12/01 13:15:03 by akivam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*ft_strdup_original(const char *s)
 	len = 0;
 	while (s[len])
 		len++;
-	dup = malloc(len + 1);  // ← Uses malloc
+	dup = malloc(len + 1); // ← Uses malloc
 	if (!dup)
 		return (NULL);
 	i = 0;
@@ -57,7 +57,7 @@ char	*ft_strdup_gc(const char *s)
 	len = 0;
 	while (s[len])
 		len++;
-	dup = gc_malloc(len + 1);  // ← Uses gc_malloc instead!
+	dup = gc_malloc(len + 1); // ← Uses gc_malloc instead!
 	if (!dup)
 		return (NULL);
 	i = 0;
@@ -88,7 +88,7 @@ char	*ft_itoa_gc(int n)
 		n /= 10;
 		len++;
 	}
-	str = gc_malloc(len + sign + 1);  // ← GC allocation
+	str = gc_malloc(len + sign + 1); // ← GC allocation
 	if (!str)
 		return (NULL);
 	str[len + sign] = '\0';
@@ -127,7 +127,6 @@ char	*gc_wrap_strdup(const char *s)
 	original = ft_strdup_original(s);
 	if (!original)
 		return (NULL);
-	
 	// Copy to GC-managed memory
 	len = 0;
 	while (original[len])
@@ -135,26 +134,24 @@ char	*gc_wrap_strdup(const char *s)
 	gc_copy = gc_malloc(len + 1);
 	if (!gc_copy)
 	{
-		free(original);  // Free the malloc'd version
+		free(original); // Free the malloc'd version
 		return (NULL);
 	}
-	
 	i = 0;
 	while (i <= len)
 	{
 		gc_copy[i] = original[i];
 		i++;
 	}
-	
-	free(original);  // Free the malloc'd version
-	return (gc_copy);  // Return GC version
+	free(original);   // Free the malloc'd version
+	return (gc_copy); // Return GC version
 }
 
 /* ************************************************************************** */
 /*                              MAIN EXAMPLE                                  */
 /* ************************************************************************** */
 
-int main(void)
+int	main(void)
 {
 	int		stack_var;
 	char	*s1;
@@ -162,29 +159,23 @@ int main(void)
 	char	*num_str;
 
 	printf("=== Libft + GC Integration Example ===\n\n");
-
 	collector_init(&stack_var);
-
 	// Method 1: Direct GC versions
 	printf("1. Using direct GC versions:\n");
 	s1 = ft_strdup_gc("Hello from GC!");
 	printf("   ft_strdup_gc: \"%s\"\n\n", s1);
-
 	// Method 2: Wrapped libft functions
 	printf("2. Using wrapped libft functions:\n");
 	s2 = gc_wrap_strdup("Wrapped string");
 	printf("   gc_wrap_strdup: \"%s\"\n\n", s2);
-
 	// Method 3: GC-aware utility functions
 	printf("3. Using GC-aware utilities:\n");
 	num_str = ft_itoa_gc(42);
 	printf("   ft_itoa_gc(42): \"%s\"\n\n", num_str);
-
 	// All strings are automatically managed
 	printf("4. Automatic memory management:\n");
 	printf("   ✓ No need to free s1, s2, num_str\n");
 	printf("   ✓ All tracked by GC\n\n");
-
 	collector_close();
 	printf("=== Example completed ===\n");
 	return (0);

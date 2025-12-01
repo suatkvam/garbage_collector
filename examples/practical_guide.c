@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   practical_guide.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: akivam <akivam@student.istanbul.com.tr>    +#+  +:+       +#+        */
+/*   By: akivam <akivam@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/23 22:29:44 by akivam              #+#    #+#             */
-/*   Updated: 2025/11/23 22:29:44 by akivam             ###   ########.tr       */
+/*   Created: 2025/12/01 13:15:03 by akivam            #+#    #+#             */
+/*   Updated: 2025/12/01 13:15:03 by akivam           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*my_strdup_before(const char *s)
 	len = 0;
 	while (s[len])
 		len++;
-	dup = malloc(len + 1);        // ← malloc here
+	dup = malloc(len + 1); // ← malloc here
 	if (!dup)
 		return (NULL);
 	i = 0;
@@ -56,7 +56,7 @@ void	usage_before(void)
 
 	str = my_strdup_before("test");
 	printf("%s\n", str);
-	free(str);                    // ← must free manually
+	free(str); // ← must free manually
 }
 
 // ============================================================================
@@ -72,7 +72,7 @@ char	*my_strdup_after(const char *s)
 	len = 0;
 	while (s[len])
 		len++;
-	dup = gc_malloc(len + 1);     // ← gc_malloc instead!
+	dup = gc_malloc(len + 1); // ← gc_malloc instead!
 	if (!dup)
 		return (NULL);
 	i = 0;
@@ -170,7 +170,7 @@ typedef struct s_data
 {
 	int		value;
 	char	*name;
-}	t_data;
+}			t_data;
 
 t_data	*gc_pattern_struct(int value, const char *name)
 {
@@ -188,7 +188,7 @@ t_data	*gc_pattern_struct(int value, const char *name)
 /*                              MAIN EXAMPLE                                  */
 /* ************************************************************************** */
 
-int main(void)
+int	main(void)
 {
 	int		stack_var;
 	char	*str1;
@@ -197,19 +197,15 @@ int main(void)
 	t_data	*data;
 
 	printf("=== Practical Integration Guide ===\n\n");
-
 	collector_init(&stack_var);
-
 	// 1. String duplication
 	printf("1. String duplication:\n");
 	str1 = gc_pattern_strdup("Hello, GC!");
 	printf("   Result: %s\n\n", str1);
-
 	// 2. String joining
 	printf("2. String joining:\n");
 	str2 = gc_pattern_strjoin("Part1", "Part2");
 	printf("   Result: %s\n\n", str2);
-
 	// 3. Array allocation
 	printf("3. Array allocation:\n");
 	arr = gc_pattern_array(5);
@@ -217,19 +213,16 @@ int main(void)
 	arr[1] = 20;
 	arr[2] = 30;
 	printf("   Array: %d, %d, %d\n\n", arr[0], arr[1], arr[2]);
-
 	// 4. Structure allocation
 	printf("4. Structure allocation:\n");
 	data = gc_pattern_struct(42, "Test Data");
 	printf("   Value: %d\n", data->value);
 	printf("   Name: %s\n\n", data->name);
-
 	// 5. Everything is auto-managed!
 	printf("5. Automatic cleanup:\n");
 	printf("   ✓ No free() calls needed\n");
 	printf("   ✓ All memory tracked by GC\n");
 	printf("   ✓ Safe from memory leaks\n\n");
-
 	collector_close();
 	printf("=== Guide completed ===\n");
 	return (0);
