@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "internal_collector.h"
-#include "internal_malloc.h"
 
 void	collector_close(void)
 {
@@ -24,7 +23,7 @@ void	collector_close(void)
 	while (current)
 	{
 		next = current->next;
-		GC_INTERNAL_FREE(current);
+		free(current);
 		current = next;
 	}
 	*head_ptr = NULL;
