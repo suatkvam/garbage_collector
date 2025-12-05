@@ -33,7 +33,7 @@ void	mark_pointer(void *ptr)
 	}
 }
 
-//!/* turend byte-byte scan using i++ slower but safer*/
+//!/* Scan at pointer-aligned boundaries for efficiency*/
 void	mark_memory_region(void *start, size_t size)
 {
 	size_t	i;
@@ -45,7 +45,7 @@ void	mark_memory_region(void *start, size_t size)
 		potential_ptr = (void **)((char *)start + i);
 		if (is_valid_pointer(*potential_ptr))
 			mark_pointer(*potential_ptr);
-		i++;
+		i += sizeof(void *);
 	}
 }
 

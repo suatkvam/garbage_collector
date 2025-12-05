@@ -25,7 +25,7 @@ static void	scan_stack_range(void *start, void *end)
 	}
 }
 
-//!/* Her iki yönü de desteklenebilir belki*/
+//!/* Supports both stack growth directions (up and down) */
 void	mark_from_stack(void)
 {
 	void	**stack_start_ptr;
